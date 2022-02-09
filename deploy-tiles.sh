@@ -12,7 +12,7 @@ else
     echo "Получение списка файлов с сервера обновлений ${WEEKLY_FOLDER}" 
     REMOTE_FILE_LIST=$(curl --silent --list-only ${WEEKLY_FOLDER}) || echo "Нет подключения к серверу обновлений"
 
-    if [[ -Z "${REMOTE_FILE_LIST}" ]] 
+    if [[ -n "${REMOTE_FILE_LIST}" ]] 
     then
         echo -e "Доступны для загрузки файлы \n ${REMOTE_FILE_LIST}"
         read -p "Загрузить файлы (д/н)? " enable_download
