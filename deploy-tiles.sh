@@ -12,28 +12,31 @@ else
     echo "Получение списка файлов с сервера обновлений ${WEEKLY_FOLDER}" 
     REMOTE_FILE_LIST=$(curl --silent --list-only ${WEEKLY_FOLDER}) || echo "Нет подключения к серверу обновлений"
 
-    echo -e "Доступны для загрузки файлы \n ${REMOTE_FILE_LIST}"
-    read -p "Загрузить файлы (д/н)? " enable_download
+    if [[ -Z ${REMOTE_FILE_LIST} ]] 
+    then
+        echo -e "Доступны для загрузки файлы \n ${REMOTE_FILE_LIST}"
+        read -p "Загрузить файлы (д/н)? " enable_download
 
-    case "${enable_download}" in
-    "д")
-        echo "Начинается загрузка файлов"
-        for tar in ${REMOTE_FILE_LIST}
-        do
-            if [[ "${tar}" =~ .*tar ]]
-            then
-                echo "Загружается ${WEEKLY_FOLDER}/${tar}"
-                curl --remote-name --continue-at - ${WEEKLY_FOLDER}/${tar}
-            fi
-        done
-        ;;
-    "н")
-        echo "Отказ от загрузки."
-        ;;
-    *)
-        echo "Ни да, ни нет. Продолжаем"
-        ;;
-    esac
+        case "${enable_download}" in
+        "д")
+            echo "Начинается загрузка файлов"
+            for tar in ${REMOTE_FILE_LIST}
+            do
+                if [[ "${tar}" =~ .*tar ]]
+                then
+                    echo "Загружается ${WEEKLY_FOLDER}/${tar}"
+                    curl --remote-name --continue-at - ${WEEKLY_FOLDER}/${tar}
+                fi
+            done
+            ;;
+        "н")
+            echo "Отказ от загрузки."
+            ;;
+        *)
+            echo "Ни да, ни нет. Продолжаем"
+            ;;
+        esac
+    fi
 fi
 
 if [ -e ${MPROXY_CONF} ]
