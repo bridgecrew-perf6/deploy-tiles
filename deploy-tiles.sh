@@ -14,10 +14,10 @@ env curl --version &>/dev/null || {
 echo "Получение списка файлов с сервера обновлений ${WEEKLY_FOLDER}" 
 REMOTE_FILE_LIST=$(curl --silent --list-only ${WEEKLY_FOLDER}) || echo "Нет подключения к серверу обновлений"
 
-echo "Доступны для загрузки файлы ${REMOTE_FILE_LIST}"
+echo -e "Доступны для загрузки файлы \n ${REMOTE_FILE_LIST}"
 read -i "н" -p "Загрузить файлы (д/н)?" download_enabled
 
-case download_enabled in
+case "${download_enabled}" in
 "д")
     echo "Начинается загрузка файлов"
     for tar in ${REMOTE_FILE_LIST}
