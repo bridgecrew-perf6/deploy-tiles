@@ -24,6 +24,7 @@ case "${download_enabled}" in
     do
         if [[ "${tar}" =~ .*tar ]]
         then
+            echo "Загружается ${WEEKLY_FOLDER}/${tar}"
             curl --remote-name --continue-at - ${WEEKLY_FOLDER}/${tar}
         fi
     done
