@@ -13,9 +13,9 @@ else
     REMOTE_FILE_LIST=$(curl --silent --list-only ${WEEKLY_FOLDER}) || echo "Нет подключения к серверу обновлений"
 
     echo -e "Доступны для загрузки файлы \n ${REMOTE_FILE_LIST}"
-    read -i "н" -p "Загрузить файлы (д/н)? " download_enabled
+    read -p "Загрузить файлы (д/н)? " enable_download
 
-    case "${download_enabled}" in
+    case "${enable_download}" in
     "д")
         echo "Начинается загрузка файлов"
         for tar in ${REMOTE_FILE_LIST}
@@ -36,13 +36,11 @@ else
     esac
 fi
 
-echo "Поиск конфигурационного файла mapproxy"
 if [ -e ${MPROXY_CONF} ]
 then
     echo "Найден ${MPROXY_CONF}"
-    
     ACTUAL_FILE_LIST=*.tar
-    echo "Распаковать архивы?"
+    echo -e "Найдены архивы \n ${ACTUAL_FILE_LIST}"
+    read -p "Распаковать архивы (д/н)? " enable_extract
     echo ${ACTUAL_FILE_LIST}
-    
 fi
