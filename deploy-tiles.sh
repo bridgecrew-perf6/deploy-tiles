@@ -15,7 +15,7 @@ REMOTE_FILE_LIST=$(curl --silent --list-only ${WEEKLY_FOLDER}) || echo "Нет �
 
 for tar in ${REMOTE_FILE_LIST}
 do
-    if "${tar}" =~ .*tar
+    if [[ "${tar}" =~ .*tar ]]
     then
         echo curl --remote-name --continue-at - ${WEEKLY_FOLDER}/${tar}
     fi
