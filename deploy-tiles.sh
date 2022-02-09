@@ -17,6 +17,6 @@ for tar in ${REMOTE_FILE_LIST}
 do
     if [[ "${tar}" =~ .*tar ]]
     then
-        echo curl --remote-name --continue-at - ${WEEKLY_FOLDER}/${tar}
+        curl --remote-name --continue-at - ${WEEKLY_FOLDER}/${tar}
     fi
 done
