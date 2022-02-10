@@ -86,7 +86,7 @@ then
         echo "Архивы не найдены"
         exit 0
     }
-    echo "Архивы в текущем каталоге ${ACTUAL_FILE_LIST}"
+    echo -e "Архивы в текущем каталоге: \n ${ACTUAL_FILE_LIST}"
     read -p "Распаковать архивы (д/н|y/n)? " enable_extract
 
     case "${enable_extract}" in
