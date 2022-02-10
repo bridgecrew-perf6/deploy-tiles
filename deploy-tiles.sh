@@ -92,13 +92,19 @@ then
     case "${enable_extract}" in
         д|да|y|yes)
             mkdir -p extracted
+
             for tar in ${ACTUAL_FILE_LIST}
             do
                 if [ -f ${tar} ]
                 then
                     case ${tar} in
                     *google*epsg900913*)
-                        tar --extract --verbose --file "./${tar}" -C ${google_epsg900913_cache_dir} && mv "./${tar}" ./extracted
+                        if touch ${google_epsg900913_cache_dir}/test_rw &>/dev/null
+                        then
+                            tar --extract --verbose --file "./${tar}" -C ${google_epsg900913_cache_dir} && mv "./${tar}" ./extracted
+                        else
+                            echo "У текущего пользователя ${USER} нет прав на запись в каталог ${google_epsg900913_cache_dir}"
+                        fi
                         ;;
                     *)
                         echo "Невозможно классифицровать архив. Необходимо вручную распаковать ${tar}"
