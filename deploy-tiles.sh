@@ -68,19 +68,19 @@ then
         echo "Архивы не найдены"
         exit 0
     }
-    echo ${ACTUAL_FILE_LIST}
+    echo "Архивы в текущем каталоге ${ACTUAL_FILE_LIST}"
     read -p "Распаковать архивы (д/н|y/n)? " enable_extract
 
     case "${enable_extract}" in
         д|да|y|yes)
+            mkdir extracted
             for tar in ${ACTUAL_FILE_LIST}
             do
                 if [ -f ${tar} ]
                 then
                     case ${tar} in
                     *google*epsg900913)
-                        :
-                        tar -cvf ${tar} -C ${google_epsg900913_cache_dir}
+                        tar --extract --verbose --file "./${tar}" -C "${google_epsg900913_cache_dir}" && mv "./${tar}" ./extracted
                         ;;
                     *)
                         echo "Необходимо вручную распаковать ${tar}"
