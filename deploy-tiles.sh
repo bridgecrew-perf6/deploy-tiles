@@ -97,8 +97,8 @@ then
                 if [ -f ${tar} ]
                 then
                     case ${tar} in
-                    *google*epsg900913)
-                        tar --extract --verbose --file "./${tar}" -C "${google_epsg900913_cache_dir}" && mv "./${tar}" ./extracted
+                    *google*epsg900913*)
+                        tar --extract --verbose --file "./${tar}" -C ${google_epsg900913_cache_dir} && mv "./${tar}" ./extracted
                         ;;
                     *)
                         echo "Невозможно классифицровать архив. Необходимо вручную распаковать ${tar}"
