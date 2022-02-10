@@ -79,7 +79,6 @@ then
         echo "Каталог для распаковки OSM epsg900913:${osm_epsg900913_cache_dir}" 
     fi
 
-
     echo -e "Поиск tar архивов в текущем каталоге"
     ACTUAL_FILE_LIST=$(ls *.tar 2>/dev/null)
     [[ -z "${ACTUAL_FILE_LIST}" ]] && {
