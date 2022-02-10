@@ -55,15 +55,19 @@ then
     then
         echo "Для автоматической распаковки архивов необходимо наличие только одного целевого каталога"
         echo "Текущее количество каталогов ${google_epsg900913_cache_dir_count}"
-        echo "Обнаружены каталги ${google_epsg900913_cache_dir}"
+        echo "Обнаружены каталоги ${google_epsg900913_cache_dir}"
         echo "Возможна только ручная распаковка"
         exit ${ERR_DETECT_DIR_AMBIGQUITY_DIR}
     else
-        echo "Каталог для распаковки Google epsg900913 ${google_epsg900913_cache_dir}" 
+        echo "Каталог для распаковки Google epsg900913:${google_epsg900913_cache_dir}" 
     fi
 
     echo -e "Поиск tar архивов в текущем каталоге"
-    ACTUAL_FILE_LIST=$(ls *.tar)
+    ACTUAL_FILE_LIST=$(ls *.tar 2>/dev/null)
+    [[ -z "${ACTUAL_FILE_LIST}" ]] && {
+        echo "Архивы не найдены"
+        exit 0
+    }
     echo ${ACTUAL_FILE_LIST}
     read -p "Распаковать архивы (д/н|y/n)? " enable_extract
 
