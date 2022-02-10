@@ -43,10 +43,13 @@ else
     fi
 fi
 
-
 if [ -e ${MPROXY_CONF} ]
 then
     echo "Найден ${MPROXY_CONF}"
+    
+    grep -iE  directory:.*google.*epsg900913 $MPROXY_CONF
+
+
     echo -e "Поиск tar архивов в текущем каталоге"
     ACTUAL_FILE_LIST=$(ls *.tar)
     echo ${ACTUAL_FILE_LIST}
@@ -58,7 +61,15 @@ then
             do
                 if [ -f ${tar} ]
                 then
-                    echo ${tar}
+                    case ${tar} in
+                    *google*epsg900913)
+
+                        :
+                        ;;
+                    *)
+                        echo "Необходимо вручнчую распаковать ${}"
+                        ;;
+                    esac
                 fi
             done
             ;;
@@ -69,10 +80,4 @@ then
             :
             ;;
         esac
-
-
-
-
-
-
 fi
