@@ -6,7 +6,7 @@ ERR_DETECT_DIR_AMBIGQUITY_DIR=13
 
 HOST=ftp.spb.vega.su
 WEEKLY_FOLDER=ftp://${HOST}/pub/weekly/
-MPROXY_CONF=/srv/geodata/cache/mproxy_conf.shelve.yaml
+MPROXY_CONF=/srv/geodata/cache/mproxy_conf.yaml
 
 MSG_NEED_CURL="Для загрузки обновлений необходима утилита curl. Команда для установки: sudo apt install -y curl"
 MSG_COULD_NOT_CONNECT="Нет подключения к серверу обновлений"
