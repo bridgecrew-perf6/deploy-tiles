@@ -91,7 +91,7 @@ then
 
     case "${enable_extract}" in
         д|да|y|yes)
-            mkdir extracted
+            mkdir -p extracted
             for tar in ${ACTUAL_FILE_LIST}
             do
                 if [ -f ${tar} ]
