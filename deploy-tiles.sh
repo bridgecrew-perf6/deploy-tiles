@@ -103,7 +103,7 @@ then
                         then
                             tar --extract --verbose --file "./${tar}" -C ${google_epsg900913_cache_dir} && mv "./${tar}" ./extracted
                         else
-                            echo "У текущего пользователя ${USER} нет прав на запись в каталог ${google_epsg900913_cache_dir}"
+                            echo "У пользователя ${USER} нет прав на запись в ${google_epsg900913_cache_dir}"
                         fi
                         ;;
                     *)
