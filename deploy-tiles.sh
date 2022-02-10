@@ -2,6 +2,8 @@
 
 set -e
 
+ERR_DETECT_DIR_AMBIGQUITY_DIR=13
+
 HOST=ftp.spb.vega.su
 WEEKLY_FOLDER=ftp://${HOST}/pub/weekly/
 MPROXY_CONF=/srv/geodata/cache/mproxy_conf.shelve.yaml
@@ -37,7 +39,7 @@ else
             echo "Отказ от загрузки."
             ;;
         *)
-            echo "Ни да, ни нет. Продолжаем"
+            echo "Продолжаем"
             ;;
         esac
     fi
@@ -46,9 +48,17 @@ fi
 if [ -e ${MPROXY_CONF} ]
 then
     echo "Найден ${MPROXY_CONF}"
-    
-    grep -iE  directory:.*google.*epsg900913 $MPROXY_CONF
 
+    google_epsg900913_cache_dir=$(grep -iE  directory:.*google.*epsg900913 $MPROXY_CONF|cut -d: -f2)
+    google_epsg900913_cache_dir_count=$(echo $google_epsg900913_cache_dir | wc --words)
+    if [[ ${google_epsg900913_cache_dir_count} -ne 1 ]]
+    then
+        echo "Для автоматической распаковки архивов необходимо наличие только одного целевого каталога"
+        echo "Текущее количество каталогов ${google_epsg900913_cache_dir_count}"
+        echo "Обнаружены каталги ${google_epsg900913_cache_dir}"
+        echo "Возможна только ручная распаковка"
+        exit ${ERR_DETECT_DIR_AMBIGQUITY_DIR}
+    fi
 
     echo -e "Поиск tar архивов в текущем каталоге"
     ACTUAL_FILE_LIST=$(ls *.tar)
@@ -63,11 +73,11 @@ then
                 then
                     case ${tar} in
                     *google*epsg900913)
-
                         :
+                        tar -cvf ${tar} -C ${google_epsg900913_cache_dir}
                         ;;
                     *)
-                        echo "Необходимо вручнчую распаковать ${}"
+                        echo "Необходимо вручную распаковать ${tar}"
                         ;;
                     esac
                 fi
