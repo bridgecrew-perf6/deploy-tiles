@@ -83,7 +83,7 @@ then
                         tar --extract --verbose --file "./${tar}" -C "${google_epsg900913_cache_dir}" && mv "./${tar}" ./extracted
                         ;;
                     *)
-                        echo "Необходимо вручную распаковать ${tar}"
+                        echo "Невозможно классифицровать архив. Необходимо вручную распаковать ${tar}"
                         ;;
                     esac
                 fi
