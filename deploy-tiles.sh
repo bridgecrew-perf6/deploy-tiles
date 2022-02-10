@@ -23,7 +23,7 @@ else
         read -p "Загрузить файлы (д/н)? " enable_download
 
         case "${enable_download}" in
-        "д|да|y|yes")
+        д|да|y|yes)
             echo "Начинается загрузка файлов"
             for tar in ${REMOTE_FILE_LIST}
             do
@@ -34,7 +34,7 @@ else
                 fi
             done
             ;;
-        "н")
+        н)
             echo "Отказ от загрузки."
             ;;
         *)
@@ -54,7 +54,7 @@ then
     read -p "Распаковать архивы (д/н)? " enable_extract
 
     case "${enable_extract}" in
-        "д|да|y|yes")
+        д|да|y|yes)
             for tar in ${ACTUAL_FILE_LIST}
             do
                 if [ -f ${tar} ]
@@ -63,7 +63,7 @@ then
                 fi
             done
             ;;
-        "н")
+        н)
             echo "Отказ от распаковки."
             ;;
         *)
