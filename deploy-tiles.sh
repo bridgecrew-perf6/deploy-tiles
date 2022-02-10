@@ -47,7 +47,7 @@ fi
 
 if [ -e ${MPROXY_CONF} ]
 then
-    echo "Найден ${MPROXY_CONF}"
+    echo "Найден конфигурационный файл Mapproxy ${MPROXY_CONF}"
 
     google_epsg900913_cache_dir=$(grep -iE  directory:.*google.*epsg900913 $MPROXY_CONF|cut -d: -f2)
     google_epsg900913_cache_dir_count=$(echo $google_epsg900913_cache_dir | wc --words)
@@ -58,6 +58,8 @@ then
         echo "Обнаружены каталги ${google_epsg900913_cache_dir}"
         echo "Возможна только ручная распаковка"
         exit ${ERR_DETECT_DIR_AMBIGQUITY_DIR}
+    else
+        echo "Каталог для распаковки Google epsg900913 ${google_epsg900913_cache_dir}" 
     fi
 
     echo -e "Поиск tar архивов в текущем каталоге"
