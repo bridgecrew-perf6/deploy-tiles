@@ -20,11 +20,10 @@ else
     if [[ -n "${REMOTE_FILE_LIST}" ]] 
     then
         echo -e "Доступны для загрузки файлы \n " ${REMOTE_FILE_LIST}
-        read -p "Загрузить файлы (д/н)? " enable_download
+        read -p "Загрузить (д/н)? " enable_download
 
         case "${enable_download}" in
         д|да|y|yes)
-            echo "Начинается загрузка файлов"
             for tar in ${REMOTE_FILE_LIST}
             do
                 if [[ "${tar}" =~ .*tar ]]
