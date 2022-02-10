@@ -12,6 +12,7 @@ MSG_NEED_CURL="Для загрузки обновлений необходима
 MSG_COULD_NOT_CONNECT="Нет подключения к серверу обновлений"
 MSG_GETTING_UPDATES="Получение списка файлов с сервера обновлений ${WEEKLY_FOLDER}" 
 
+download() {
 if ! env curl --version &>/dev/null 
 then
     echo ${MSG_NEED_CURL}
@@ -44,6 +45,9 @@ else
         esac
     fi
 fi
+}
+
+extract(){
 
 if [ -e ${MPROXY_CONF} ]
 then
@@ -61,6 +65,20 @@ then
     else
         echo "Каталог для распаковки Google epsg900913:${google_epsg900913_cache_dir}" 
     fi
+
+    osm_epsg900913_cache_dir=$(grep -iE  directory:.*osm.*epsg900913 $MPROXY_CONF|cut -d: -f2)
+    osm_epsg900913_cache_dir_count=$(echo $osm_epsg900913_cache_dir | wc --words)
+    if [[ ${osm_epsg900913_cache_dir_count} -ne 1 ]]
+    then
+        echo "Для автоматической распаковки архивов необходимо наличие только одного целевого каталога"
+        echo "Текущее количество каталогов ${osm_epsg900913_cache_dir_count}"
+        echo "Обнаружены каталоги ${osm_epsg900913_cache_dir}"
+        echo "Возможна только ручная распаковка"
+        exit ${ERR_DETECT_DIR_AMBIGQUITY_DIR}
+    else
+        echo "Каталог для распаковки OSM epsg900913:${osm_epsg900913_cache_dir}" 
+    fi
+
 
     echo -e "Поиск tar архивов в текущем каталоге"
     ACTUAL_FILE_LIST=$(ls *.tar 2>/dev/null)
@@ -97,3 +115,8 @@ then
             ;;
         esac
 fi
+
+}
+
+download
+extract
