@@ -20,7 +20,7 @@ else
     if [[ -n "${REMOTE_FILE_LIST}" ]] 
     then
         echo -e "Доступны для загрузки файлы \n " ${REMOTE_FILE_LIST}
-        read -p "Загрузить (д/н)? " enable_download
+        read -p "Загрузить (д/н|y/n)? " enable_download
 
         case "${enable_download}" in
         д|да|y|yes)
@@ -50,7 +50,7 @@ then
     echo -e "Поиск tar архивов в текущем каталоге"
     ACTUAL_FILE_LIST=$(ls *.tar)
     echo ${ACTUAL_FILE_LIST}
-    read -p "Распаковать архивы (д/н)? " enable_extract
+    read -p "Распаковать архивы (д/н|y/n)? " enable_extract
 
     case "${enable_extract}" in
         д|да|y|yes)
